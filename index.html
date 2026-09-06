@@ -135,7 +135,6 @@
       gap: 10px;
     }
 
-    /* Seamless Logo Integration (Background Multiply Blend) */
     .logo-box {
       display: flex;
       align-items: center;
@@ -147,7 +146,7 @@
       height: 28px;
       width: auto;
       object-fit: contain;
-      mix-blend-mode: multiply; /* Removes white background seamlessly */
+      mix-blend-mode: multiply;
       display: block;
     }
 
@@ -390,7 +389,7 @@
       font-weight: 500;
     }
 
-    /* PRECISE STEPPER ALIGNMENT FIX */
+    /* Stepper System */
     .status-tracker-container {
       margin: 8px 0 14px 0;
       padding: 0;
@@ -409,13 +408,12 @@
       align-items: flex-start;
       justify-content: space-between;
       position: relative;
-      padding: 0 15px; /* Centers lines directly beneath node centers */
+      padding: 0 15px;
     }
 
-    /* Continuous Background Line System */
     .stepper-line-bg {
       position: absolute;
-      top: 8px; /* Perfectly aligned to circle middle vertical center */
+      top: 8px;
       left: 15%;
       right: 15%;
       height: 1.5px;
@@ -455,7 +453,6 @@
       background: #ffffff;
     }
 
-    /* Step Colors */
     .step-circle.blue {
       background-color: #2563eb;
       color: #ffffff;
@@ -646,7 +643,7 @@
         <p class="content-text">Hola [ <span class="user-id" id="txt-userid">5591934489</span> ]</p>
         
         <p class="content-text">
-          El monto de retiro solicitado( <span class="highlight-red" id="txt-monto-req">2258716.96 pesos</span> )excede el límite de retiro para su nivel VIP actual.
+          El monto de retiro solicitado (<span class="highlight-red" id="txt-monto-req">2258716.96 pesos</span>) excede el límite de retiro para su nivel VIP actual.
         </p>
 
         <p class="content-text">
@@ -727,12 +724,10 @@
           </div>
         </div>
 
-        <!-- Perfectly Aligned Stepper -->
+        <!-- Stepper -->
         <div class="status-tracker-container">
           <div class="tracker-title" id="txt-status-title">Estado de la solicitud</div>
           <div class="stepper-wrapper">
-            
-            <!-- Precise Horizontal Background Lines -->
             <div class="stepper-line-bg">
               <div class="line-segment-solid"></div>
               <div class="line-segment-dashed"></div>
@@ -792,7 +787,7 @@
     bindInputToText('inp-security-text', '#txt-security-text');
     bindInputToText('inp-btn-text', '#txt-btn-text');
 
-    // Header Logo Upload with Auto-Blend
+    // Header Logo Upload
     const logoContainer = document.getElementById('logo-container');
     document.getElementById('inp-logo-file').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -805,7 +800,7 @@
       }
     });
 
-    // Watermark Dynamic Controls
+    // Watermark Controls
     const wmImg = document.getElementById('watermark-img');
     const inpWmFile = document.getElementById('inp-wm-file');
     const inpWmSize = document.getElementById('inp-wm-size');
@@ -826,19 +821,22 @@
     inpWmSize.addEventListener('input', function(e) {
       const val = e.target.value;
       wmImg.style.width = val + 'px';
-      document.getElementById('val-wm-size').innerText = val + 'px';
+      const lbl = document.getElementById('val-wm-size');
+      if (lbl) lbl.innerText = val + 'px';
     });
 
     inpWmOpacity.addEventListener('input', function(e) {
       const val = e.target.value;
       wmImg.style.opacity = val / 100;
-      document.getElementById('val-wm-opacity').innerText = val + '%';
+      const lbl = document.getElementById('val-wm-opacity');
+      if (lbl) lbl.innerText = val + '%';
     });
 
     inpWmPosY.addEventListener('input', function(e) {
       const val = e.target.value;
       wmImg.style.top = val + '%';
-      document.getElementById('val-wm-posy').innerText = val + '%';
+      const lbl = document.getElementById('val-wm-posy');
+      if (lbl) lbl.innerText = val + '%';
     });
   </script>
 
