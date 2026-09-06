@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mercado Libre - Notification System with Dynamic Watermark</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #e2e8f0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* Live Control Setting Panel */
+    .control-panel {
+      width: 100%;
+      max-width: 380px;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .control-panel h3 {
+      font-size: 15px;
+      color: #0f172a;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #2563eb;
+    }
+
+    .section-divider {
+      font-size: 13px;
+      font-weight: bold;
+      color: #2563eb;
+      margin: 15px 0 8px 0;
+      padding-top: 10px;
+      border-top: 1px dashed #cbd5e1;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 4px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="file"] {
+      width: 100%;
+      padding: 7px 10px;
+      font-size: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .form-group input[type="range"] {
+      width: 100%;
+      cursor: pointer;
+    }
+
+    /* Card Notification Container */
+    .card {
+      width: 100%;
+      max-width: 480px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Dynamic Watermark Area */
+    .card-body {
+      position: relative;
+      padding: 24px;
+      background-color: #ffffff;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    /* Watermark Image Element */
+    .watermark-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 250px;
+      height: auto;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+      object-fit: contain;
+      transition: all 0.1s ease;
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Header Perfect Color Match Fix */
+    .header {
+      background-color: #ffe600;
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 58px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+    }
+
+    /* Multiply mode removes yellow/white block background completely */
+    .logo-box img {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      filter: contrast(110%) brightness(100%);
+      display: block;
+    }
+
+    .default-logo-svg {
+      height: 38px;
+      width: auto;
+    }
+
+    .divider {
+      width: 1px;
+      height: 24px;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #0d1b2a;
+    }
+
+    .close-btn {
+      font-size: 18px;
+      color: #0d1b2a;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+    }
+
+    /* Notification Red Subject Alert Box */
+    .subject-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      background-color: #fef2f2;
+      border: 1.5px solid #f87171;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.08);
+      animation: pulse-border 2s infinite;
+    }
+
+    @keyframes pulse-border {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.2); }
+      70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .error-icon {
+      width: 32px;
+      height: 32px;
+      background-color: #dc2626;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+      flex-shrink: 0;
+      box-shadow: 0 3px 8px rgba(220, 38, 38, 0.3);
+    }
+
+    .subject-text {
+      font-size: 14px;
+      color: #0d1b2a;
+      line-height: 1.4;
+    }
+
+    .highlight-red {
+      color: #dc2626;
+      font-weight: bold;
+    }
+
+    .vip-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      color: #dc2626;
+      font-weight: bold;
+    }
+
+    .crown-icon {
+      width: 14px;
+      height: 14px;
+      fill: #dc2626;
+      display: inline-block;
+      vertical-align: -1px;
+    }
+
+    .content-text {
+      font-size: 13.5px;
+      color: #0d1b2a;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .user-id {
+      color: #dc2626;
+      font-weight: bold;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: bold;
+      font-size: 14px;
+      color: #0d1b2a;
+      margin-top: 22px;
+      margin-bottom: 16px;
+    }
+
+    .details-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #1d4ed8, #0f172a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+    }
+
+    .details-icon svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      font-size: 13px;
+      color: #0d1b2a;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+
+    .detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background-color: #eab308;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .info-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 22px;
+      margin-bottom: 22px;
+      background: rgba(248, 250, 252, 0.85);
+      backdrop-filter: blur(2px);
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .lock-security-icon {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #0d1b2a, #1e293b);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(13, 27, 42, 0.25);
+    }
+
+    .lock-security-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .badge-dot {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 12px;
+      height: 12px;
+      background-color: #eab308;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge-dot svg {
+      width: 7px;
+      height: 7px;
+      stroke: #000;
+      stroke-width: 3;
+    }
+
+    .info-text {
+      font-size: 12.5px;
+      color: #1e293b;
+      line-height: 1.45;
+    }
+
+    .signature {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #0d1b2a;
+      line-height: 1.4;
+    }
+
+    .signature-title {
+      font-weight: bold;
+    }
+
+    .button-container {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .btn-ok {
+      background: linear-gradient(180deg, #0d1b2a 0%, #001233 100%);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(13, 27, 42, 0.35);
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Live Control Setting Panel -->
+  <div class="control-panel">
+    <h3>⚙️ General Settings</h3>
+
+    <div class="form-group">
+      <label>Upload Header Logo</label>
+      <input type="file" id="inp-logo-file" accept="image/*">
+    </div>
+
+    <div class="form-group">
+      <label>User ID</label>
+      <input type="text" id="inp-userid" value="5591934489">
+    </div>
+
+    <div class="form-group">
+      <label>Target VIP Level</label>
+      <input type="text" id="inp-vip-target" value="VIP 3">
+    </div>
+
+    <div class="form-group">
+      <label>Requested Amount</label>
+      <input type="text" id="inp-monto-req" value="358716.96 pesos">
+    </div>
+
+    <!-- Watermark Control Section -->
+    <div class="section-divider">💧 Watermark Control</div>
+
+    <div class="form-group">
+      <label>Upload Watermark Image</label>
+      <input type="file" id="inp-wm-file" accept="image/*">
+    </div>
+
+    <div class="form-group">
+      <label>Watermark Size <span id="val-wm-size">250px</span></label>
+      <input type="range" id="inp-wm-size" min="50" max="450" value="250">
+    </div>
+
+    <div class="form-group">
+      <label>Watermark Opacity (အလင်းအမှိန်) <span id="val-wm-opacity">15%</span></label>
+      <input type="range" id="inp-wm-opacity" min="0" max="100" value="15">
+    </div>
+
+    <div class="form-group">
+      <label>Vertical Position (Y Axis) <span id="val-wm-posy">50%</span></label>
+      <input type="range" id="inp-wm-posy" min="0" max="100" value="50">
+    </div>
+  </div>
+
+  <!-- Card Preview -->
+  <div class="card">
+    <div class="header">
+      <div class="header-left">
+        <div class="logo-box" id="logo-container">
+          <svg class="default-logo-svg" viewBox="0 0 160 45" fill="none">
+            <path d="M22.5 5C12.8 5 5 12.8 5 22.5C5 32.2 12.8 40 22.5 40C32.2 40 40 32.2 40 22.5C40 12.8 32.2 5 22.5 5ZM22.5 36.5C14.8 36.5 8.5 30.2 8.5 22.5C8.5 14.8 14.8 8.5 22.5 8.5C30.2 8.5 36.5 14.8 36.5 22.5C36.5 30.2 30.2 36.5 22.5 36.5Z" fill="#03255c"/>
+            <path d="M16 21.5C17.5 19.5 21 17.5 24 19C26.5 20.2 28.5 23 27 25.5C25.5 28 21.5 29.5 18 27.5C16.5 26.5 14.5 24 16 21.5Z" stroke="#03255c" stroke-width="2.5" stroke-linecap="round"/>
+            <text x="48" y="22" fill="#03255c" font-size="17" font-weight="800" font-family="Arial, sans-serif">mercado</text>
+            <text x="48" y="36" fill="#03255c" font-size="17" font-weight="800" font-family="Arial, sans-serif">libre</text>
+          </svg>
+        </div>
+        <div class="divider"></div>
+        <div class="header-title">Notificación del sistema</div>
+      </div>
+      <div class="close-btn">✕</div>
+    </div>
+
+    <div class="card-body">
+      <!-- Watermark Image Element -->
+      <img id="watermark-img" class="watermark-overlay" src="https://upload.wikimedia.org/wikipedia/commons/2/29/Mercado_Libre_logo.svg" alt="Watermark">
+
+      <div class="card-content">
+        <div class="subject-container">
+          <div class="error-icon">✕</div>
+          <div class="subject-text">
+            <strong>Asunto: Requiere actualización a 
+              <span class="vip-tag">
+                <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+                <span class="txt-vip-target">VIP 3</span>
+              </span> 
+              para completar el retiro
+            </strong>
+          </div>
+        </div>
+
+        <p class="content-text">Hola <span class="user-id">[ <span id="txt-userid">5591934489</span> ]</span></p>
+        
+        <p class="content-text">
+          El monto de retiro solicitado( <span class="highlight-red" id="txt-monto-req">358716.96 pesos</span> )excede el límite de retiro para su nivel VIP actual.
+        </p>
+
+        <p class="content-text">
+          Para continuar retirando, debe actualizar su cuenta a 
+          <span class="vip-tag">
+            <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+            <span class="txt-vip-target">VIP 3</span>
+          </span> 
+          en la plataforma Mercado Libre.
+        </p>
+
+        <div class="section-title">
+          <div class="details-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <span>Detalles de la cuenta:</span>
+        </div>
+
+        <div class="detail-item">
+          <div class="dot"></div>
+          <div>Monto a retirar: Límite de retiro nivel 
+            <span class="vip-tag">
+              <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+              VIP 1
+            </span>: <span class="highlight-red">251,000 pesos</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="dot"></div>
+          <div>Monto requerido para actualizar a 
+            <span class="vip-tag">
+              <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+              <span class="txt-vip-target">VIP 3</span>
+            </span>: <span class="highlight-red">155,000 pesos</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="dot"></div>
+          <div>Monto a retirar después de actualizar a 
+            <span class="vip-tag">
+              <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+              <span class="txt-vip-target">VIP 3</span>
+            </span>: <span class="highlight-red">560,000 pesos</span>
+          </div>
+        </div>
+
+        <div class="info-container">
+          <div class="lock-security-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <div class="badge-dot">
+              <svg viewBox="0 0 24 24" fill="none">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div class="info-text">
+            Una vez confirmado su depósito, nuestro equipo de finanzas verificará sus fondos. Tenga la seguridad de que este depósito no se descontará y podrá retirarlo junto con el saldo restante.
+          </div>
+        </div>
+
+        <div class="signature">
+          <div class="signature-title">Atentamente,</div>
+          <div>Equipo de Atención al Cliente de Mercado Libre</div>
+        </div>
+
+        <div class="button-container">
+          <button class="btn-ok">Actualiza ahora y obtén tus fondos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // General Input Binding
+    function bindInputToText(inputId, targetSelector) {
+      document.getElementById(inputId).addEventListener('input', function(e) {
+        document.querySelectorAll(targetSelector).forEach(el => el.innerText = e.target.value);
+      });
+    }
+
+    bindInputToText('inp-userid', '#txt-userid');
+    bindInputToText('inp-vip-target', '.txt-vip-target');
+    bindInputToText('inp-monto-req', '#txt-monto-req');
+
+    // Header Logo File Upload Logic
+    const logoContainer = document.getElementById('logo-container');
+    document.getElementById('inp-logo-file').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          logoContainer.innerHTML = `<img src="${evt.target.result}" alt="Header Logo">`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Watermark Dynamic Controls
+    const wmImg = document.getElementById('watermark-img');
+    const inpWmFile = document.getElementById('inp-wm-file');
+    const inpWmSize = document.getElementById('inp-wm-size');
+    const inpWmOpacity = document.getElementById('inp-wm-opacity');
+    const inpWmPosY = document.getElementById('inp-wm-posy');
+
+    inpWmFile.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          wmImg.src = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    inpWmSize.addEventListener('input', function(e) {
+      const val = e.target.value;
+      wmImg.style.width = val + 'px';
+      document.getElementById('val-wm-size').innerText = val + 'px';
+    });
+
+    inpWmOpacity.addEventListener('input', function(e) {
+      const val = e.target.value;
+      wmImg.style.opacity = val / 100;
+      document.getElementById('val-wm-opacity').innerText = val + '%';
+    });
+
+    inpWmPosY.addEventListener('input', function(e) {
+      const val = e.target.value;
+      wmImg.style.top = val + '%';
+      document.getElementById('val-wm-posy').innerText = val + '%';
+    });
+  </script>
+
+</body>
+</html>
