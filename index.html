@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mercado Libre - Modern Notification System</title>
+  <title>Mercado Libre - Ultra Compact Minimal</title>
   <style>
     :root {
       --primary-bg: #0f172a;
       --card-bg: #ffffff;
       --accent-yellow: #ffe600;
       --text-dark: #1e293b;
-      --text-muted: #475569;
+      --text-muted: #64748b;
       --red-alert: #ef4444;
-      --red-bg: rgba(254, 242, 242, 0.7);
+      --red-bg: #fef2f2;
       --red-border: #fca5a5;
       --gold-solid: #d97706;
-      --gold-badge-bg: linear-gradient(135deg, rgba(255, 251, 227, 0.9) 0%, rgba(254, 243, 199, 0.9) 100%);
+      --gold-badge-bg: linear-gradient(135deg, #fffbe3 0%, #fef3c7 100%);
       --dark-blue: #002b66;
-      --radius-lg: 18px;
-      --radius-md: 10px;
-      --shadow-premium: 0 15px 35px -10px rgba(15, 23, 42, 0.12);
+      --radius-lg: 16px;
+      --radius-md: 8px;
+      --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.08);
     }
 
     * {
@@ -40,12 +40,12 @@
       flex-wrap: wrap;
     }
 
-    /* Modern Control Panel */
+    /* Control Panel */
     .control-panel {
       width: 100%;
-      max-width: 380px;
+      max-width: 360px;
       background: #ffffff;
-      padding: 20px;
+      padding: 18px;
       border-radius: var(--radius-lg);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       max-height: 90vh;
@@ -54,57 +54,52 @@
     }
 
     .control-panel h3 {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       color: #0f172a;
-      margin-bottom: 14px;
-      padding-bottom: 8px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
       border-bottom: 2px solid #3b82f6;
     }
 
     .section-title-ctrl {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: #3b82f6;
-      margin: 14px 0 8px 0;
-      padding-top: 8px;
+      margin: 12px 0 6px 0;
+      padding-top: 6px;
       border-top: 1px dashed #e2e8f0;
     }
 
     .form-group {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .form-group label {
       display: flex;
       justify-content: space-between;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 600;
       color: #475569;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .form-group input[type="text"],
     .form-group textarea,
     .form-group input[type="file"] {
       width: 100%;
-      padding: 8px 10px;
-      font-size: 12.5px;
+      padding: 7px 9px;
+      font-size: 12px;
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
+      border-radius: 6px;
       outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .form-group input:focus, .form-group textarea:focus {
-      border-color: #3b82f6;
     }
 
     .form-group textarea {
       resize: vertical;
-      min-height: 50px;
+      min-height: 45px;
     }
 
     .form-group input[type="range"] {
@@ -113,84 +108,72 @@
       cursor: pointer;
     }
 
-    /* Modern Notification Card Container - တောင်းဆိုချက်အရ size တိုထားပါသည် (430px) */
+    /* Card Container */
     .card {
       width: 100%;
-      max-width: 430px;
+      max-width: 410px;
       background-color: var(--card-bg);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-premium);
       overflow: hidden;
-      border: 1px solid rgba(226, 232, 240, 0.8);
+      border: 1px solid #e2e8f0;
       position: relative;
     }
 
     /* Header */
     .header {
       background-color: var(--accent-yellow);
-      padding: 12px 18px;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      position: relative;
-      z-index: 10;
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-
-    .logo-box {
-      display: flex;
-      align-items: center;
-      height: 28px;
+      gap: 10px;
     }
 
     .logo-box img {
-      height: 28px;
+      height: 24px;
       width: auto;
       object-fit: contain;
-      mix-blend-mode: multiply;
     }
 
     .default-logo-svg {
-      height: 26px;
+      height: 24px;
       width: auto;
     }
 
     .divider {
       width: 1px;
-      height: 18px;
-      background-color: rgba(15, 23, 42, 0.15);
+      height: 16px;
+      background-color: rgba(15, 23, 42, 0.2);
     }
 
     .header-title {
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
       color: #0f172a;
-      letter-spacing: -0.2px;
     }
 
     .close-btn {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: rgba(0, 0, 0, 0.05);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: 12px;
       color: #0f172a;
       cursor: pointer;
     }
 
-    /* Card Main Content Area */
     .card-body {
       position: relative;
-      padding: 20px;
-      z-index: 1;
+      padding: 18px;
     }
 
     /* Watermark Overlay */
@@ -199,12 +182,11 @@
       top: 39%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 300px;
+      width: 260px;
       height: auto;
-      opacity: 0.45;
+      opacity: 0.35;
       pointer-events: none;
       z-index: 1;
-      object-fit: contain;
     }
 
     .card-content {
@@ -216,73 +198,69 @@
     .subject-container {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 16px;
-      padding: 12px 14px;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 10px 12px;
       background-color: var(--red-bg);
       border: 1px solid var(--red-border);
       border-radius: var(--radius-md);
     }
 
     .error-icon {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       background-color: var(--red-alert);
       border-radius: 50%;
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
     }
 
     .subject-text {
-      font-size: 12.5px;
+      font-size: 12px;
       color: var(--text-dark);
-      line-height: 1.45;
+      line-height: 1.4;
       font-weight: 600;
     }
 
-    /* Gold VIP Tag */
+    /* VIP Tag */
     .vip-tag {
       display: inline-flex;
       align-items: center;
-      gap: 3px;
-      padding: 2px 6px;
+      gap: 2px;
+      padding: 1px 5px;
       background: var(--gold-badge-bg);
-      border: 1px solid rgba(217, 119, 6, 0.4);
-      border-radius: 5px;
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      border-radius: 4px;
       color: var(--gold-solid);
-      font-weight: 800;
-      font-size: 11.5px;
-      letter-spacing: 0.2px;
-      box-shadow: 0 2px 5px rgba(217, 119, 6, 0.08);
+      font-weight: 700;
+      font-size: 11px;
       vertical-align: middle;
     }
 
     .crown-icon {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       fill: var(--gold-solid);
-      flex-shrink: 0;
     }
 
     .content-text {
-      font-size: 12.5px;
+      font-size: 12px;
       color: var(--text-dark);
-      line-height: 1.55;
-      margin-bottom: 12px;
+      line-height: 1.5;
+      margin-bottom: 10px;
     }
 
     .user-id {
       color: var(--red-alert);
       font-weight: 700;
       background: rgba(254, 242, 242, 0.8);
-      padding: 1px 5px;
-      border-radius: 4px;
+      padding: 1px 4px;
+      border-radius: 3px;
     }
 
     .highlight-red {
@@ -293,50 +271,46 @@
     .section-title {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       font-weight: 700;
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--text-dark);
-      margin-top: 18px;
-      margin-bottom: 10px;
+      margin-top: 14px;
+      margin-bottom: 8px;
     }
 
     .details-icon {
-      width: 26px;
-      height: 26px;
-      background: rgba(239, 246, 255, 0.85);
-      border-radius: 6px;
+      width: 22px;
+      height: 22px;
+      background: #eff6ff;
+      border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #2563eb;
-      flex-shrink: 0;
     }
 
     .details-icon svg {
-      width: 14px;
-      height: 14px;
+      width: 12px;
+      height: 12px;
       fill: none;
       stroke: currentColor;
       stroke-width: 2.2;
     }
 
-    /* Details Box */
     .details-card {
-      background: transparent;
-      border: none;
-      padding: 0 4px;
-      margin-bottom: 16px;
+      padding: 0 2px;
+      margin-bottom: 14px;
     }
 
     .detail-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      padding: 8px 0;
-      font-size: 12px;
-      border-bottom: 1px dashed rgba(203, 213, 225, 0.6);
+      gap: 6px;
+      padding: 6px 0;
+      font-size: 11.5px;
+      border-bottom: 1px dashed #e2e8f0;
     }
 
     .detail-item:last-child {
@@ -346,44 +320,42 @@
     .detail-left {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       color: var(--text-muted);
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .dot {
-      width: 5px;
-      height: 5px;
+      width: 4px;
+      height: 4px;
       background-color: #3b82f6;
       border-radius: 50%;
-      flex-shrink: 0;
     }
 
     .detail-right {
       display: flex;
       align-items: center;
-      gap: 4px;
-      white-space: nowrap;
+      gap: 3px;
       font-weight: 600;
     }
 
-    /* Security Notice Box */
+    /* Security Notice */
     .info-container {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      padding: 12px;
-      background: rgba(248, 250, 252, 0.65);
+      gap: 8px;
+      padding: 10px;
+      background: #f8fafc;
       border-radius: var(--radius-md);
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      margin-bottom: 18px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 12px;
     }
 
     .lock-security-icon {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       background: var(--dark-blue);
-      border-radius: 7px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -392,24 +364,117 @@
     }
 
     .lock-security-icon svg {
-      width: 14px;
-      height: 14px;
+      width: 12px;
+      height: 12px;
       fill: none;
       stroke: #ffffff;
       stroke-width: 2;
     }
 
     .info-text {
-      font-size: 11.5px;
+      font-size: 11px;
       color: var(--red-alert);
-      line-height: 1.45;
+      line-height: 1.4;
       font-weight: 500;
     }
 
+    /* BORDERLESS ULTRA-MINI STEPPER */
+    .status-tracker-container {
+      margin: 8px 0 14px 0;
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .tracker-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    .stepper-wrapper {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .stepper-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex: 1;
+      z-index: 2;
+    }
+
+    /* Mini Connecting Lines */
+    .stepper-item::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: -50%;
+      width: 100%;
+      height: 1px;
+      background: #2563eb;
+      z-index: 1;
+    }
+
+    .stepper-item:first-child::before {
+      content: none;
+    }
+
+    .stepper-item.dashed::before {
+      background: transparent;
+      border-top: 1px dashed #cbd5e1;
+    }
+
+    .step-circle {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8.5px;
+      font-weight: 700;
+      z-index: 2;
+    }
+
+    /* Step 1: Ultra-mini Blue */
+    .step-circle.blue {
+      background-color: #2563eb;
+      color: #ffffff;
+    }
+
+    /* Step 2: Ultra-mini Orange */
+    .step-circle.orange {
+      background: #f59e0b;
+      color: #ffffff;
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
+
+    /* Step 3: Ultra-mini Green */
+    .step-circle.green {
+      background-color: #d1fae5;
+      color: #059669;
+    }
+
+    .step-label {
+      margin-top: 3px;
+      font-size: 8.5px;
+      font-weight: 600;
+      color: #475569;
+      text-align: center;
+      line-height: 1;
+    }
+
     .signature {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--text-dark);
-      line-height: 1.45;
+      line-height: 1.4;
     }
 
     .signature-title {
@@ -417,20 +482,20 @@
     }
 
     .button-container {
-      margin-top: 18px;
+      margin-top: 14px;
     }
 
     .btn-ok {
       background: var(--dark-blue);
       color: white;
       border: none;
-      padding: 12px 16px;
-      font-size: 13px;
+      padding: 11px 14px;
+      font-size: 12.5px;
       font-weight: 700;
       border-radius: var(--radius-md);
       cursor: pointer;
       width: 100%;
-      box-shadow: 0 8px 16px -4px rgba(0, 43, 102, 0.35);
+      box-shadow: 0 6px 14px -3px rgba(0, 43, 102, 0.3);
       transition: background 0.2s;
     }
 
@@ -443,7 +508,7 @@
 
   <!-- Live Control Setting Panel -->
   <div class="control-panel">
-    <h3>⚙️ Control Panel</h3>
+    <h3>⚙️ Ultra Control Panel</h3>
 
     <div class="section-title-ctrl">🖼️ Header & Logo</div>
     <div class="form-group">
@@ -487,6 +552,24 @@
       <input type="text" id="inp-limit-after" value="560,000 pesos">
     </div>
 
+    <div class="section-title-ctrl">📊 Status Stepper Control</div>
+    <div class="form-group">
+      <label>Status Title</label>
+      <input type="text" id="inp-status-title" value="Estado de la solicitud">
+    </div>
+    <div class="form-group">
+      <label>Step 1 Label</label>
+      <input type="text" id="inp-step1-lbl" value="En revisión">
+    </div>
+    <div class="form-group">
+      <label>Step 2 Label</label>
+      <input type="text" id="inp-step2-lbl" value="Acción necesaria">
+    </div>
+    <div class="form-group">
+      <label>Step 3 Label</label>
+      <input type="text" id="inp-step3-lbl" value="Completado">
+    </div>
+
     <div class="section-title-ctrl">📝 Text & Action Button</div>
     <div class="form-group">
       <label>Security Note Text</label>
@@ -503,12 +586,12 @@
       <input type="file" id="inp-wm-file" accept="image/*">
     </div>
     <div class="form-group">
-      <label>Watermark Size <span id="val-wm-size">300px</span></label>
-      <input type="range" id="inp-wm-size" min="100" max="450" value="300">
+      <label>Watermark Size <span id="val-wm-size">260px</span></label>
+      <input type="range" id="inp-wm-size" min="100" max="400" value="260">
     </div>
     <div class="form-group">
-      <label>Watermark Opacity <span id="val-wm-opacity">45%</span></label>
-      <input type="range" id="inp-wm-opacity" min="0" max="100" value="45">
+      <label>Watermark Opacity <span id="val-wm-opacity">35%</span></label>
+      <input type="range" id="inp-wm-opacity" min="0" max="100" value="35">
     </div>
     <div class="form-group">
       <label>Vertical Position (Y Axis) <span id="val-wm-posy">39%</span></label>
@@ -621,7 +704,7 @@
           </div>
         </div>
 
-        <!-- Security Note Container -->
+        <!-- Security Note -->
         <div class="info-container">
           <div class="lock-security-icon">
             <svg viewBox="0 0 24 24">
@@ -631,6 +714,25 @@
           </div>
           <div class="info-text" id="txt-security-text">
             Una vez confirmado su depósito, nuestro equipo de finanzas verificará sus fondos. Tenga la seguridad de que este depósito no se descontará y podrá retirarlo junto con el saldo restante.
+          </div>
+        </div>
+
+        <!-- Borderless & Ultra Compact Status Tracker -->
+        <div class="status-tracker-container">
+          <div class="tracker-title" id="txt-status-title">Estado de la solicitud</div>
+          <div class="stepper-wrapper">
+            <div class="stepper-item">
+              <div class="step-circle blue">1</div>
+              <div class="step-label" id="txt-step1-lbl">En revisión</div>
+            </div>
+            <div class="stepper-item">
+              <div class="step-circle orange">2</div>
+              <div class="step-label" id="txt-step2-lbl">Acción necesaria</div>
+            </div>
+            <div class="stepper-item dashed">
+              <div class="step-circle green">3</div>
+              <div class="step-label" id="txt-step3-lbl">Completado</div>
+            </div>
           </div>
         </div>
 
@@ -648,7 +750,6 @@
   </div>
 
   <script>
-    // Text Binding Script
     function bindInputToText(inputId, targetSelector) {
       const inputEl = document.getElementById(inputId);
       if(!inputEl) return;
@@ -667,6 +768,10 @@
     bindInputToText('inp-limit-current', '#txt-limit-current');
     bindInputToText('inp-upgrade-cost', '#txt-upgrade-cost');
     bindInputToText('inp-limit-after', '#txt-limit-after');
+    bindInputToText('inp-status-title', '#txt-status-title');
+    bindInputToText('inp-step1-lbl', '#txt-step1-lbl');
+    bindInputToText('inp-step2-lbl', '#txt-step2-lbl');
+    bindInputToText('inp-step3-lbl', '#txt-step3-lbl');
     bindInputToText('inp-security-text', '#txt-security-text');
     bindInputToText('inp-btn-text', '#txt-btn-text');
 
