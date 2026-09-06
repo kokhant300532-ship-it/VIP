@@ -3,57 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mercado Libre - Dynamic Notification System</title>
+  <title>Mercado Libre - Modern Notification System</title>
   <style>
+    :root {
+      --primary-bg: #0f172a;
+      --card-bg: #ffffff;
+      --accent-yellow: #ffe600;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --red-alert: #ef4444;
+      --red-bg: #fef2f2;
+      --red-border: #fca5a5;
+      --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+      --gold-solid: #d97706;
+      --gold-badge-bg: linear-gradient(135deg, #fffbe3 0%, #fef3c7 100%);
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --shadow-premium: 0 20px 40px -15px rgba(15, 23, 42, 0.12);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
-      background-color: #e2e8f0;
+      background: #f1f5f9;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
-      padding: 20px;
-      gap: 20px;
+      padding: 30px 15px;
+      gap: 24px;
       flex-wrap: wrap;
     }
 
-    /* Live Control Setting Panel */
+    /* Modern Control Panel */
     .control-panel {
       width: 100%;
-      max-width: 420px;
+      max-width: 400px;
       background: #ffffff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       max-height: 90vh;
       overflow-y: auto;
+      border: 1px solid #e2e8f0;
     }
 
     .control-panel h3 {
       font-size: 16px;
+      font-weight: 700;
       color: #0f172a;
-      margin-bottom: 12px;
-      padding-bottom: 6px;
-      border-bottom: 2px solid #2563eb;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #3b82f6;
     }
 
     .section-title-ctrl {
-      font-size: 13px;
-      font-weight: bold;
-      color: #2563eb;
-      margin: 14px 0 8px 0;
-      padding-top: 8px;
-      border-top: 1px dashed #cbd5e1;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #3b82f6;
+      margin: 16px 0 10px 0;
+      padding-top: 10px;
+      border-top: 1px dashed #e2e8f0;
     }
 
     .form-group {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .form-group label {
@@ -61,106 +82,117 @@
       justify-content: space-between;
       font-size: 12px;
       font-weight: 600;
-      color: #334155;
-      margin-bottom: 4px;
+      color: #475569;
+      margin-bottom: 6px;
     }
 
     .form-group input[type="text"],
     .form-group textarea,
     .form-group input[type="file"] {
       width: 100%;
-      padding: 7px 10px;
-      font-size: 12px;
+      padding: 9px 12px;
+      font-size: 13px;
       border: 1px solid #cbd5e1;
-      border-radius: 6px;
+      border-radius: 8px;
       outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: #3b82f6;
     }
 
     .form-group textarea {
       resize: vertical;
-      min-height: 50px;
+      min-height: 55px;
     }
 
     .form-group input[type="range"] {
       width: 100%;
+      accent-color: #3b82f6;
       cursor: pointer;
     }
 
-    /* Card Notification Container */
+    /* Modern Notification Card Container */
     .card {
       width: 100%;
       max-width: 480px;
-      background-color: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      background-color: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-premium);
       overflow: hidden;
+      border: 1px solid rgba(226, 232, 240, 0.8);
       position: relative;
     }
 
-    /* Header Styling */
+    /* Sleek Top Header */
     .header {
-      background-color: #ffe600;
-      padding: 8px 18px;
+      background-color: var(--accent-yellow);
+      padding: 14px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 58px;
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
     .logo-box {
       display: flex;
       align-items: center;
-      justify-content: center;
-      height: 42px;
+      height: 32px;
     }
 
     .logo-box img {
-      height: 42px;
+      height: 32px;
       width: auto;
       object-fit: contain;
       mix-blend-mode: multiply;
-      filter: contrast(110%) brightness(100%);
-      display: block;
     }
 
     .default-logo-svg {
-      height: 38px;
+      height: 30px;
       width: auto;
     }
 
     .divider {
       width: 1px;
-      height: 24px;
-      background-color: rgba(0, 0, 0, 0.2);
+      height: 20px;
+      background-color: rgba(15, 23, 42, 0.15);
     }
 
     .header-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: #0d1b2a;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.2px;
     }
 
     .close-btn {
-      font-size: 18px;
-      color: #0d1b2a;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #0f172a;
       cursor: pointer;
-      line-height: 1;
-      opacity: 0.7;
+      transition: background 0.2s;
     }
 
-    /* Dynamic Watermark Area */
+    .close-btn:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Card Main Content */
     .card-body {
       position: relative;
-      padding: 24px;
-      background-color: #ffffff;
-      z-index: 1;
-      overflow: hidden;
+      padding: 26px;
     }
 
     .watermark-overlay {
@@ -168,13 +200,12 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 250px;
+      width: 240px;
       height: auto;
-      opacity: 0.15;
+      opacity: 0.12;
       pointer-events: none;
       z-index: 0;
       object-fit: contain;
-      transition: all 0.1s ease;
     }
 
     .card-content {
@@ -182,125 +213,133 @@
       z-index: 2;
     }
 
-    /* Notification Subject Alert Box */
+    /* Red Alert Modern Subject Box */
     .subject-container {
       display: flex;
       align-items: flex-start;
       gap: 12px;
-      margin-bottom: 16px;
-      padding: 12px 14px;
-      background-color: #fef2f2;
-      border: 1.5px solid #f87171;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.08);
-      animation: pulse-border 2s infinite;
-    }
-
-    @keyframes pulse-border {
-      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.2); }
-      70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+      margin-bottom: 20px;
+      padding: 14px 16px;
+      background-color: var(--red-bg);
+      border: 1px solid var(--red-border);
+      border-radius: var(--radius-md);
     }
 
     .error-icon {
-      width: 32px;
-      height: 32px;
-      background-color: #dc2626;
+      width: 28px;
+      height: 28px;
+      background-color: var(--red-alert);
       border-radius: 50%;
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 13px;
       font-weight: bold;
       flex-shrink: 0;
-      box-shadow: 0 3px 8px rgba(220, 38, 38, 0.3);
+      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
     }
 
     .subject-text {
-      font-size: 14px;
-      color: #0d1b2a;
-      line-height: 1.4;
+      font-size: 13.5px;
+      color: var(--text-dark);
+      line-height: 1.5;
+      font-weight: 600;
     }
 
-    .highlight-red {
-      color: #dc2626;
-      font-weight: bold;
-    }
-
+    /* Luxury Metallic Gold VIP Tag */
     .vip-tag {
       display: inline-flex;
       align-items: center;
-      gap: 3px;
-      color: #dc2626;
-      font-weight: bold;
+      gap: 4px;
+      padding: 2px 8px;
+      background: var(--gold-badge-bg);
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      border-radius: 6px;
+      color: var(--gold-solid);
+      font-weight: 800;
+      font-size: 12.5px;
+      letter-spacing: 0.2px;
+      box-shadow: 0 2px 5px rgba(217, 119, 6, 0.08);
       vertical-align: middle;
     }
 
     .crown-icon {
       width: 14px;
       height: 14px;
-      fill: #dc2626;
-      display: inline-block;
+      fill: var(--gold-solid);
       flex-shrink: 0;
     }
 
     .content-text {
       font-size: 13.5px;
-      color: #0d1b2a;
+      color: var(--text-dark);
       line-height: 1.6;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .user-id {
-      color: #dc2626;
-      font-weight: bold;
+      color: var(--red-alert);
+      font-weight: 700;
+      background: #fef2f2;
+      padding: 1px 6px;
+      border-radius: 4px;
     }
 
+    .highlight-red {
+      color: var(--red-alert);
+      font-weight: 700;
+    }
+
+    /* Account Details Section Header */
     .section-title {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-weight: bold;
+      gap: 10px;
+      font-weight: 700;
       font-size: 14px;
-      color: #0d1b2a;
-      margin-top: 22px;
-      margin-bottom: 16px;
+      color: var(--text-dark);
+      margin-top: 24px;
+      margin-bottom: 14px;
     }
 
     .details-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, #1d4ed8, #0f172a);
-      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      background: #eff6ff;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #ffffff;
+      color: #2563eb;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
     }
 
     .details-icon svg {
-      width: 17px;
-      height: 17px;
+      width: 16px;
+      height: 16px;
       fill: none;
       stroke: currentColor;
       stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
     }
 
-    /* Detail Item Alignment Styles Fix */
+    /* Clean Card Layout for Financial Rows */
+    .details-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 6px 14px;
+      margin-bottom: 20px;
+    }
+
     .detail-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 10px;
       padding: 10px 0;
       font-size: 13px;
-      color: #0d1b2a;
-      border-bottom: 1px dashed #cbd5e1;
+      border-bottom: 1px dashed #e2e8f0;
     }
 
     .detail-item:last-child {
@@ -311,124 +350,104 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      flex: 1;
-    }
-
-    .detail-right {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      white-space: nowrap;
-      text-align: right;
+      color: var(--text-muted);
+      font-weight: 500;
     }
 
     .dot {
       width: 6px;
       height: 6px;
-      background-color: #eab308;
+      background-color: #3b82f6;
       border-radius: 50%;
       flex-shrink: 0;
     }
 
-    /* Security Box */
+    .detail-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    /* Security Notice Box */
     .info-container {
       display: flex;
       align-items: flex-start;
       gap: 12px;
-      margin-top: 22px;
-      margin-bottom: 22px;
-      background: rgba(248, 250, 252, 0.85);
-      backdrop-filter: blur(2px);
       padding: 14px;
-      border-radius: 12px;
+      background: #f8fafc;
+      border-radius: var(--radius-md);
       border: 1px solid #e2e8f0;
+      margin-bottom: 22px;
     }
 
     .lock-security-icon {
-      position: relative;
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #0d1b2a, #1e293b);
-      border-radius: 10px;
+      width: 32px;
+      height: 32px;
+      background: #0f172a;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #ffffff;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(13, 27, 42, 0.25);
     }
 
     .lock-security-icon svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       fill: none;
       stroke: #ffffff;
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .badge-dot {
-      position: absolute;
-      bottom: -2px;
-      right: -2px;
-      width: 12px;
-      height: 12px;
-      background-color: #eab308;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .badge-dot svg {
-      width: 7px;
-      height: 7px;
-      stroke: #000;
-      stroke-width: 3;
+      stroke-width: 2;
     }
 
     .info-text {
       font-size: 12.5px;
-      color: #1e293b;
-      line-height: 1.45;
+      color: var(--text-muted);
+      line-height: 1.5;
     }
 
     .signature {
-      margin-top: 15px;
       font-size: 13px;
-      color: #0d1b2a;
-      line-height: 1.4;
+      color: var(--text-dark);
+      line-height: 1.5;
     }
 
     .signature-title {
-      font-weight: bold;
+      font-weight: 700;
     }
 
     .button-container {
-      margin-top: 25px;
-      text-align: center;
+      margin-top: 24px;
     }
 
+    /* Primary CTA Button */
     .btn-ok {
-      background: linear-gradient(180deg, #0d1b2a 0%, #001233 100%);
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       color: white;
       border: none;
-      padding: 12px 28px;
+      padding: 14px 20px;
       font-size: 14px;
-      font-weight: bold;
-      border-radius: 8px;
+      font-weight: 700;
+      border-radius: var(--radius-md);
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(13, 27, 42, 0.35);
       width: 100%;
+      box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.3);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-ok:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px -5px rgba(15, 23, 42, 0.4);
     }
   </style>
 </head>
 <body>
 
+  <!-- Live Control Setting Panel -->
   <div class="control-panel">
-    <h3>⚙️ Full Live Control Panel</h3>
+    <h3>⚙️ Control Panel</h3>
 
     <div class="section-title-ctrl">🖼️ Header & Logo</div>
     <div class="form-group">
@@ -472,7 +491,7 @@
       <input type="text" id="inp-limit-after" value="560,000 pesos">
     </div>
 
-    <div class="section-title-ctrl">📝 Security Notice & Action Button</div>
+    <div class="section-title-ctrl">📝 Text & Action Button</div>
     <div class="form-group">
       <label>Security Note Text</label>
       <textarea id="inp-security-text">Una vez confirmado su depósito, nuestro equipo de finanzas verificará sus fondos. Tenga la seguridad de que este depósito no se descontará y podrá retirarlo junto con el saldo restante.</textarea>
@@ -488,12 +507,12 @@
       <input type="file" id="inp-wm-file" accept="image/*">
     </div>
     <div class="form-group">
-      <label>Watermark Size <span id="val-wm-size">250px</span></label>
-      <input type="range" id="inp-wm-size" min="50" max="450" value="250">
+      <label>Watermark Size <span id="val-wm-size">240px</span></label>
+      <input type="range" id="inp-wm-size" min="50" max="400" value="240">
     </div>
     <div class="form-group">
-      <label>Watermark Opacity <span id="val-wm-opacity">15%</span></label>
-      <input type="range" id="inp-wm-opacity" min="0" max="100" value="15">
+      <label>Watermark Opacity <span id="val-wm-opacity">12%</span></label>
+      <input type="range" id="inp-wm-opacity" min="0" max="100" value="12">
     </div>
     <div class="form-group">
       <label>Vertical Position (Y Axis) <span id="val-wm-posy">50%</span></label>
@@ -501,6 +520,7 @@
     </div>
   </div>
 
+  <!-- Card Preview Area -->
   <div class="card">
     <div class="header">
       <div class="header-left">
@@ -508,8 +528,8 @@
           <svg class="default-logo-svg" viewBox="0 0 160 45" fill="none">
             <path d="M22.5 5C12.8 5 5 12.8 5 22.5C5 32.2 12.8 40 22.5 40C32.2 40 40 32.2 40 22.5C40 12.8 32.2 5 22.5 5ZM22.5 36.5C14.8 36.5 8.5 30.2 8.5 22.5C8.5 14.8 14.8 8.5 22.5 8.5C30.2 8.5 36.5 14.8 36.5 22.5C36.5 30.2 30.2 36.5 22.5 36.5Z" fill="#03255c"/>
             <path d="M16 21.5C17.5 19.5 21 17.5 24 19C26.5 20.2 28.5 23 27 25.5C25.5 28 21.5 29.5 18 27.5C16.5 26.5 14.5 24 16 21.5Z" stroke="#03255c" stroke-width="2.5" stroke-linecap="round"/>
-            <text x="48" y="22" fill="#03255c" font-size="17" font-weight="800" font-family="Arial, sans-serif">mercado</text>
-            <text x="48" y="36" fill="#03255c" font-size="17" font-weight="800" font-family="Arial, sans-serif">libre</text>
+            <text x="48" y="22" fill="#03255c" font-size="17" font-weight="800">mercado</text>
+            <text x="48" y="36" fill="#03255c" font-size="17" font-weight="800">libre</text>
           </svg>
         </div>
         <div class="divider"></div>
@@ -519,13 +539,20 @@
     </div>
 
     <div class="card-body">
+      <!-- Watermark Image -->
       <img id="watermark-img" class="watermark-overlay" src="https://upload.wikimedia.org/wikipedia/commons/2/29/Mercado_Libre_logo.svg" alt="Watermark">
 
       <div class="card-content">
+        <!-- Red Alert Subject Box -->
         <div class="subject-container">
           <div class="error-icon">✕</div>
           <div class="subject-text">
-            <strong>Asunto: Requiere actualización a <span class="vip-tag"><svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg><span class="txt-vip-target">VIP 1</span></span> para completar el retiro</strong>
+            Asunto: Requiere actualización a 
+            <span class="vip-tag">
+              <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+              <span class="txt-vip-target">VIP 1</span>
+            </span> 
+            para completar el retiro
           </div>
         </div>
 
@@ -536,7 +563,12 @@
         </p>
 
         <p class="content-text">
-          Para continuar retirando, debe actualizar su cuenta a <span class="vip-tag"><svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg><span class="txt-vip-target">VIP 1</span></span> en la plataforma Mercado Libre.
+          Para continuar retirando, debe actualizar su cuenta a 
+          <span class="vip-tag">
+            <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+            <span class="txt-vip-target">VIP 1</span>
+          </span> 
+          en la plataforma Mercado Libre.
         </p>
 
         <div class="section-title">
@@ -546,65 +578,63 @@
               <polyline points="14 2 14 8 20 8"></polyline>
               <line x1="16" y1="13" x2="8" y2="13"></line>
               <line x1="16" y1="17" x2="8" y2="17"></line>
-              <polyline points="10 9 9 9 8 9"></polyline>
             </svg>
           </div>
           <span>Detalles de la cuenta:</span>
         </div>
 
-        <div class="detail-item">
-          <div class="detail-left">
-            <div class="dot"></div>
-            <span>Monto a retirar: Límite de retiro nivel</span>
+        <!-- Structured Details Block -->
+        <div class="details-card">
+          <div class="detail-item">
+            <div class="detail-left">
+              <div class="dot"></div>
+              <span>Monto a retirar: Límite de retiro nivel</span>
+            </div>
+            <div class="detail-right">
+              <span class="vip-tag">
+                <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+                <span id="txt-vip-current">VIP 1</span>
+              </span>:
+              <span class="highlight-red" id="txt-limit-current">251,000 pesos</span>
+            </div>
           </div>
-          <div class="detail-right">
-            <span class="vip-tag">
-              <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
-              <span id="txt-vip-current">VIP 1</span>
-            </span>:
-            <span class="highlight-red" id="txt-limit-current">251,000 pesos</span>
+
+          <div class="detail-item">
+            <div class="detail-left">
+              <div class="dot"></div>
+              <span>Monto requerido para actualizar a</span>
+            </div>
+            <div class="detail-right">
+              <span class="vip-tag">
+                <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+                <span class="txt-vip-target">VIP 1</span>
+              </span>:
+              <span class="highlight-red" id="txt-upgrade-cost">155,000 pesos</span>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-left">
+              <div class="dot"></div>
+              <span>Monto a retirar después de actualizar a</span>
+            </div>
+            <div class="detail-right">
+              <span class="vip-tag">
+                <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+                <span class="txt-vip-target">VIP 1</span>
+              </span>:
+              <span class="highlight-red" id="txt-limit-after">560,000 pesos</span>
+            </div>
           </div>
         </div>
 
-        <div class="detail-item">
-          <div class="detail-left">
-            <div class="dot"></div>
-            <span>Monto requerido para actualizar a</span>
-          </div>
-          <div class="detail-right">
-            <span class="vip-tag">
-              <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
-              <span class="txt-vip-target">VIP 1</span>
-            </span>:
-            <span class="highlight-red" id="txt-upgrade-cost">155,000 pesos</span>
-          </div>
-        </div>
-
-        <div class="detail-item">
-          <div class="detail-left">
-            <div class="dot"></div>
-            <span>Monto a retirar después de actualizar a</span>
-          </div>
-          <div class="detail-right">
-            <span class="vip-tag">
-              <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
-              <span class="txt-vip-target">VIP 1</span>
-            </span>:
-            <span class="highlight-red" id="txt-limit-after">560,000 pesos</span>
-          </div>
-        </div>
-
+        <!-- Security Note -->
         <div class="info-container">
           <div class="lock-security-icon">
             <svg viewBox="0 0 24 24">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
-            <div class="badge-dot">
-              <svg viewBox="0 0 24 24" fill="none">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            </div>
           </div>
           <div class="info-text" id="txt-security-text">
             Una vez confirmado su depósito, nuestro equipo de finanzas verificará sus fondos. Tenga la seguridad de que este depósito no se descontará y podrá retirarlo junto con el saldo restante.
@@ -624,7 +654,7 @@
   </div>
 
   <script>
-    // Universal Live Binding Function
+    // Realtime Input Binding logic
     function bindInputToText(inputId, targetSelector) {
       const inputEl = document.getElementById(inputId);
       if(!inputEl) return;
@@ -635,7 +665,6 @@
       });
     }
 
-    // Dynamic Controls Initialization
     bindInputToText('inp-header-title', '#txt-header-title');
     bindInputToText('inp-userid', '#txt-userid');
     bindInputToText('inp-vip-target', '.txt-vip-target');
@@ -647,7 +676,7 @@
     bindInputToText('inp-security-text', '#txt-security-text');
     bindInputToText('inp-btn-text', '#txt-btn-text');
 
-    // Header Logo Upload
+    // Logo Upload Functionality
     const logoContainer = document.getElementById('logo-container');
     document.getElementById('inp-logo-file').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -660,7 +689,7 @@
       }
     });
 
-    // Watermark Dynamic Adjustments
+    // Watermark Dynamic Controls
     const wmImg = document.getElementById('watermark-img');
     const inpWmFile = document.getElementById('inp-wm-file');
     const inpWmSize = document.getElementById('inp-wm-size');
