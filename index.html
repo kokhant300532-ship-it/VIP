@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mercado Libre - Ultra Compact Minimal</title>
+  <title>Mercado Libre - Fixed Blend & Pixel Alignment</title>
   <style>
     :root {
       --primary-bg: #0f172a;
@@ -123,7 +123,7 @@
     /* Header */
     .header {
       background-color: var(--accent-yellow);
-      padding: 10px 16px;
+      padding: 8px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -135,15 +135,26 @@
       gap: 10px;
     }
 
+    /* Seamless Logo Integration (Background Multiply Blend) */
+    .logo-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+    }
+
     .logo-box img {
-      height: 24px;
+      height: 28px;
       width: auto;
       object-fit: contain;
+      mix-blend-mode: multiply; /* Removes white background seamlessly */
+      display: block;
     }
 
     .default-logo-svg {
-      height: 24px;
+      height: 26px;
       width: auto;
+      mix-blend-mode: multiply;
     }
 
     .divider {
@@ -187,6 +198,7 @@
       opacity: 0.35;
       pointer-events: none;
       z-index: 1;
+      mix-blend-mode: multiply;
     }
 
     .card-content {
@@ -378,20 +390,18 @@
       font-weight: 500;
     }
 
-    /* BORDERLESS ULTRA-MINI STEPPER */
+    /* PRECISE STEPPER ALIGNMENT FIX */
     .status-tracker-container {
       margin: 8px 0 14px 0;
       padding: 0;
       background: transparent;
-      border: none;
-      box-shadow: none;
     }
 
     .tracker-title {
       font-size: 11px;
       font-weight: 700;
       color: #0f172a;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .stepper-wrapper {
@@ -399,6 +409,30 @@
       align-items: flex-start;
       justify-content: space-between;
       position: relative;
+      padding: 0 15px; /* Centers lines directly beneath node centers */
+    }
+
+    /* Continuous Background Line System */
+    .stepper-line-bg {
+      position: absolute;
+      top: 8px; /* Perfectly aligned to circle middle vertical center */
+      left: 15%;
+      right: 15%;
+      height: 1.5px;
+      display: flex;
+      z-index: 1;
+    }
+
+    .line-segment-solid {
+      flex: 1;
+      height: 100%;
+      background-color: #2563eb;
+    }
+
+    .line-segment-dashed {
+      flex: 1;
+      height: 100%;
+      border-top: 1.5px dashed #cbd5e1;
     }
 
     .stepper-item {
@@ -406,29 +440,7 @@
       flex-direction: column;
       align-items: center;
       position: relative;
-      flex: 1;
       z-index: 2;
-    }
-
-    /* Mini Connecting Lines */
-    .stepper-item::before {
-      content: '';
-      position: absolute;
-      top: 8px;
-      left: -50%;
-      width: 100%;
-      height: 1px;
-      background: #2563eb;
-      z-index: 1;
-    }
-
-    .stepper-item:first-child::before {
-      content: none;
-    }
-
-    .stepper-item.dashed::before {
-      background: transparent;
-      border-top: 1px dashed #cbd5e1;
     }
 
     .step-circle {
@@ -440,30 +452,28 @@
       justify-content: center;
       font-size: 8.5px;
       font-weight: 700;
-      z-index: 2;
+      background: #ffffff;
     }
 
-    /* Step 1: Ultra-mini Blue */
+    /* Step Colors */
     .step-circle.blue {
       background-color: #2563eb;
       color: #ffffff;
     }
 
-    /* Step 2: Ultra-mini Orange */
     .step-circle.orange {
       background: #f59e0b;
       color: #ffffff;
-      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.25);
     }
 
-    /* Step 3: Ultra-mini Green */
     .step-circle.green {
       background-color: #d1fae5;
       color: #059669;
     }
 
     .step-label {
-      margin-top: 3px;
+      margin-top: 4px;
       font-size: 8.5px;
       font-weight: 600;
       color: #475569;
@@ -516,7 +526,7 @@
       <input type="text" id="inp-header-title" value="Notificación del sistema">
     </div>
     <div class="form-group">
-      <label>Upload Header Logo</label>
+      <label>Upload Header Logo (Auto Blend)</label>
       <input type="file" id="inp-logo-file" accept="image/*">
     </div>
 
@@ -717,10 +727,17 @@
           </div>
         </div>
 
-        <!-- Borderless & Ultra Compact Status Tracker -->
+        <!-- Perfectly Aligned Stepper -->
         <div class="status-tracker-container">
           <div class="tracker-title" id="txt-status-title">Estado de la solicitud</div>
           <div class="stepper-wrapper">
+            
+            <!-- Precise Horizontal Background Lines -->
+            <div class="stepper-line-bg">
+              <div class="line-segment-solid"></div>
+              <div class="line-segment-dashed"></div>
+            </div>
+
             <div class="stepper-item">
               <div class="step-circle blue">1</div>
               <div class="step-label" id="txt-step1-lbl">En revisión</div>
@@ -729,7 +746,7 @@
               <div class="step-circle orange">2</div>
               <div class="step-label" id="txt-step2-lbl">Acción necesaria</div>
             </div>
-            <div class="stepper-item dashed">
+            <div class="stepper-item">
               <div class="step-circle green">3</div>
               <div class="step-label" id="txt-step3-lbl">Completado</div>
             </div>
@@ -775,7 +792,7 @@
     bindInputToText('inp-security-text', '#txt-security-text');
     bindInputToText('inp-btn-text', '#txt-btn-text');
 
-    // Logo Upload
+    // Header Logo Upload with Auto-Blend
     const logoContainer = document.getElementById('logo-container');
     document.getElementById('inp-logo-file').addEventListener('change', function(e) {
       const file = e.target.files[0];
