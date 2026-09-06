@@ -97,7 +97,7 @@
       position: relative;
     }
 
-    /* Header Styling with 100% Color Blend Fix */
+    /* Header Styling */
     .header {
       background-color: #ffe600;
       padding: 8px 18px;
@@ -234,6 +234,7 @@
       gap: 3px;
       color: #dc2626;
       font-weight: bold;
+      vertical-align: middle;
     }
 
     .crown-icon {
@@ -241,13 +242,13 @@
       height: 14px;
       fill: #dc2626;
       display: inline-block;
-      vertical-align: -1px;
+      flex-shrink: 0;
     }
 
     .content-text {
       font-size: 13.5px;
       color: #0d1b2a;
-      line-height: 1.5;
+      line-height: 1.6;
       margin-bottom: 12px;
     }
 
@@ -290,10 +291,12 @@
       stroke-linejoin: round;
     }
 
+    /* Detail Item Alignment Styles Fix */
     .detail-item {
       display: flex;
-      align-items: flex-start;
-      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
       padding: 10px 0;
       font-size: 13px;
       color: #0d1b2a;
@@ -304,12 +307,26 @@
       border-bottom: none;
     }
 
+    .detail-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .detail-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      text-align: right;
+    }
+
     .dot {
       width: 6px;
       height: 6px;
       background-color: #eab308;
       border-radius: 50%;
-      margin-top: 6px;
       flex-shrink: 0;
     }
 
@@ -410,7 +427,6 @@
 </head>
 <body>
 
-  <!-- Live Control Setting Panel -->
   <div class="control-panel">
     <h3>⚙️ Full Live Control Panel</h3>
 
@@ -441,7 +457,7 @@
     <div class="section-title-ctrl">💰 Amounts & Financial Values</div>
     <div class="form-group">
       <label>Requested Withdrawal Amount</label>
-      <input type="text" id="inp-monto-req" value="358716.96 pesos">
+      <input type="text" id="inp-monto-req" value="2258716.96 pesos">
     </div>
     <div class="form-group">
       <label>Current VIP Withdrawal Limit</label>
@@ -476,7 +492,7 @@
       <input type="range" id="inp-wm-size" min="50" max="450" value="250">
     </div>
     <div class="form-group">
-      <label>Watermark Opacity (အလင်းအမှိန်) <span id="val-wm-opacity">15%</span></label>
+      <label>Watermark Opacity <span id="val-wm-opacity">15%</span></label>
       <input type="range" id="inp-wm-opacity" min="0" max="100" value="15">
     </div>
     <div class="form-group">
@@ -485,7 +501,6 @@
     </div>
   </div>
 
-  <!-- Card Preview Area -->
   <div class="card">
     <div class="header">
       <div class="header-left">
@@ -504,37 +519,24 @@
     </div>
 
     <div class="card-body">
-      <!-- Watermark Element -->
       <img id="watermark-img" class="watermark-overlay" src="https://upload.wikimedia.org/wikipedia/commons/2/29/Mercado_Libre_logo.svg" alt="Watermark">
 
       <div class="card-content">
-        <!-- Red Alert Subject Box -->
         <div class="subject-container">
           <div class="error-icon">✕</div>
           <div class="subject-text">
-            <strong>Asunto: Requiere actualización a 
-              <span class="vip-tag">
-                <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
-                <span class="txt-vip-target">VIP 1</span>
-              </span> 
-              para completar el retiro
-            </strong>
+            <strong>Asunto: Requiere actualización a <span class="vip-tag"><svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg><span class="txt-vip-target">VIP 1</span></span> para completar el retiro</strong>
           </div>
         </div>
 
-        <p class="content-text">Hola <span class="user-id">[ <span id="txt-userid">5591934489</span> ]</span></p>
+        <p class="content-text">Hola [ <span class="user-id" id="txt-userid">5591934489</span> ]</p>
         
         <p class="content-text">
-          El monto de retiro solicitado( <span class="highlight-red" id="txt-monto-req">358716.96 pesos</span> )excede el límite de retiro para su nivel VIP actual.
+          El monto de retiro solicitado( <span class="highlight-red" id="txt-monto-req">2258716.96 pesos</span> )excede el límite de retiro para su nivel VIP actual.
         </p>
 
         <p class="content-text">
-          Para continuar retirando, debe actualizar su cuenta a 
-          <span class="vip-tag">
-            <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
-            <span class="txt-vip-target">VIP 1</span>
-          </span> 
-          en la plataforma Mercado Libre.
+          Para continuar retirando, debe actualizar su cuenta a <span class="vip-tag"><svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg><span class="txt-vip-target">VIP 1</span></span> en la plataforma Mercado Libre.
         </p>
 
         <div class="section-title">
@@ -551,36 +553,47 @@
         </div>
 
         <div class="detail-item">
-          <div class="dot"></div>
-          <div>Monto a retirar: Límite de retiro nivel 
+          <div class="detail-left">
+            <div class="dot"></div>
+            <span>Monto a retirar: Límite de retiro nivel</span>
+          </div>
+          <div class="detail-right">
             <span class="vip-tag">
               <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
               <span id="txt-vip-current">VIP 1</span>
-            </span>: <span class="highlight-red" id="txt-limit-current">251,000 pesos</span>
+            </span>:
+            <span class="highlight-red" id="txt-limit-current">251,000 pesos</span>
           </div>
         </div>
 
         <div class="detail-item">
-          <div class="dot"></div>
-          <div>Monto requerido para actualizar a 
+          <div class="detail-left">
+            <div class="dot"></div>
+            <span>Monto requerido para actualizar a</span>
+          </div>
+          <div class="detail-right">
             <span class="vip-tag">
               <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
               <span class="txt-vip-target">VIP 1</span>
-            </span>: <span class="highlight-red" id="txt-upgrade-cost">155,000 pesos</span>
+            </span>:
+            <span class="highlight-red" id="txt-upgrade-cost">155,000 pesos</span>
           </div>
         </div>
 
         <div class="detail-item">
-          <div class="dot"></div>
-          <div>Monto a retirar después de actualizar a 
+          <div class="detail-left">
+            <div class="dot"></div>
+            <span>Monto a retirar después de actualizar a</span>
+          </div>
+          <div class="detail-right">
             <span class="vip-tag">
               <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
               <span class="txt-vip-target">VIP 1</span>
-            </span>: <span class="highlight-red" id="txt-limit-after">560,000 pesos</span>
+            </span>:
+            <span class="highlight-red" id="txt-limit-after">560,000 pesos</span>
           </div>
         </div>
 
-        <!-- Security Notice Box -->
         <div class="info-container">
           <div class="lock-security-icon">
             <svg viewBox="0 0 24 24">
