@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mercado Libre - Fixed Blend & Pixel Alignment</title>
+  <title>Mercado Libre - Fixed Stepper Lines</title>
   <style>
     :root {
       --primary-bg: #0f172a;
@@ -395,7 +395,7 @@
       font-weight: 500;
     }
 
-    /* Stepper System */
+    /* Stepper System Fix */
     .status-tracker-container {
       margin: 8px 0 14px 0;
       padding: 0;
@@ -414,14 +414,15 @@
       align-items: flex-start;
       justify-content: space-between;
       position: relative;
-      padding: 0 15px;
+      padding: 0 25px; /* Side padding to center circles */
     }
 
+    /* Fixed line container bounded exactly between circle 1 and circle 3 */
     .stepper-line-bg {
       position: absolute;
-      top: 8px;
-      left: 15%;
-      right: 15%;
+      top: 8px; /* Perfectly aligned to middle of 16px circle */
+      left: 33px; /* 25px padding + 8px (half circle width) */
+      right: 33px; /* 25px padding + 8px (half circle width) */
       height: 1.5px;
       display: flex;
       z-index: 1;
@@ -445,6 +446,8 @@
       align-items: center;
       position: relative;
       z-index: 2;
+      width: 16px; /* Bound item width to circle diameter */
+      overflow: visible;
     }
 
     .step-circle {
@@ -457,6 +460,7 @@
       font-size: 8.5px;
       font-weight: 700;
       background: #ffffff;
+      flex-shrink: 0;
     }
 
     .step-circle.blue {
@@ -482,6 +486,7 @@
       color: #475569;
       text-align: center;
       line-height: 1;
+      white-space: nowrap;
     }
 
     .signature {
@@ -730,7 +735,7 @@
           </div>
         </div>
 
-        <!-- Stepper -->
+        <!-- Fixed Stepper -->
         <div class="status-tracker-container">
           <div class="tracker-title" id="txt-status-title">Estado de la solicitud</div>
           <div class="stepper-wrapper">
