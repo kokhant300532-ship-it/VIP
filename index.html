@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mercado Libre - Fixed Stepper Lines</title>
+  <title>Mercado Libre - Fixed VIP Alignment</title>
   <style>
     :root {
       --primary-bg: #0f172a;
@@ -111,7 +111,7 @@
     /* Card Container */
     .card {
       width: 100%;
-      max-width: 410px;
+      max-width: 480px;
       background-color: var(--card-bg);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-premium);
@@ -238,20 +238,21 @@
       font-weight: 600;
     }
 
-    /* VIP Tag */
+    /* VIP Tag Style */
     .vip-tag {
       display: inline-flex;
       align-items: center;
-      gap: 2px;
-      padding: 1px 5px;
+      justify-content: center;
+      gap: 3px;
+      padding: 1px 6px;
       background: var(--gold-badge-bg);
       border: 1px solid rgba(217, 119, 6, 0.3);
       border-radius: 4px;
       color: var(--gold-solid);
       font-weight: 700;
       font-size: 11px;
-      vertical-align: middle;
       white-space: nowrap;
+      min-width: 60px;
     }
 
     .crown-icon {
@@ -279,6 +280,7 @@
     .highlight-red {
       color: var(--red-alert);
       font-weight: 700;
+      white-space: nowrap;
     }
 
     .section-title {
@@ -311,23 +313,15 @@
       stroke-width: 2.2;
     }
 
+    /* CSS Grid Layout for Perfect Alignment */
     .details-card {
-      padding: 0 2px;
-      margin-bottom: 14px;
-    }
-
-    .detail-item {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      row-gap: 8px;
+      column-gap: 6px;
       align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      padding: 6px 0;
+      margin-bottom: 14px;
       font-size: 11.5px;
-      border-bottom: 1px dashed #e2e8f0;
-    }
-
-    .detail-item:last-child {
-      border-bottom: none;
     }
 
     .detail-left {
@@ -336,7 +330,7 @@
       gap: 5px;
       color: var(--text-muted);
       font-weight: 500;
-      flex: 1;
+      padding-right: 4px;
     }
 
     .dot {
@@ -347,13 +341,10 @@
       flex-shrink: 0;
     }
 
-    .detail-right {
-      display: flex;
-      align-items: center;
-      gap: 3px;
+    .colon-separator {
       font-weight: 600;
-      flex-shrink: 0;
-      white-space: nowrap;
+      color: var(--text-dark);
+      padding: 0 2px;
     }
 
     /* Security Notice */
@@ -395,7 +386,7 @@
       font-weight: 500;
     }
 
-    /* Stepper System Fix */
+    /* Stepper System */
     .status-tracker-container {
       margin: 8px 0 14px 0;
       padding: 0;
@@ -414,15 +405,14 @@
       align-items: flex-start;
       justify-content: space-between;
       position: relative;
-      padding: 0 25px; /* Side padding to center circles */
+      padding: 0 25px;
     }
 
-    /* Fixed line container bounded exactly between circle 1 and circle 3 */
     .stepper-line-bg {
       position: absolute;
-      top: 8px; /* Perfectly aligned to middle of 16px circle */
-      left: 33px; /* 25px padding + 8px (half circle width) */
-      right: 33px; /* 25px padding + 8px (half circle width) */
+      top: 8px;
+      left: 33px;
+      right: 33px;
       height: 1.5px;
       display: flex;
       z-index: 1;
@@ -446,7 +436,7 @@
       align-items: center;
       position: relative;
       z-index: 2;
-      width: 16px; /* Bound item width to circle diameter */
+      width: 16px;
       overflow: visible;
     }
 
@@ -528,7 +518,7 @@
   <div class="control-panel">
     <h3>⚙️ Ultra Control Panel</h3>
 
-    <div class="section-title-ctrl">🖼️ Header & Logo</div>
+    <div class="section-title-ctrl">🖼 Header & Logo</div>
     <div class="form-group">
       <label>Header Title Text</label>
       <input type="text" id="inp-header-title" value="Notificación del sistema">
@@ -559,15 +549,15 @@
     </div>
     <div class="form-group">
       <label>Current VIP Withdrawal Limit</label>
-      <input type="text" id="inp-limit-current" value="251,000 pesos">
+      <input type="text" id="inp-limit-current" value="25,122,000 pesos">
     </div>
     <div class="form-group">
       <label>Required Upgrade Deposit</label>
-      <input type="text" id="inp-upgrade-cost" value="155,000 pesos">
+      <input type="text" id="inp-upgrade-cost" value="155,03558300 pesos">
     </div>
     <div class="form-group">
       <label>Withdrawal Limit After Upgrade</label>
-      <input type="text" id="inp-limit-after" value="560,000 pesos">
+      <input type="text" id="inp-limit-after" value="0,000 pesos">
     </div>
 
     <div class="section-title-ctrl">📊 Status Stepper Control</div>
@@ -678,48 +668,43 @@
           <span>Detalles de la cuenta:</span>
         </div>
 
+        <!-- Grid Container for Perfectly Aligned VIP Boxes -->
         <div class="details-card">
-          <div class="detail-item">
-            <div class="detail-left">
-              <div class="dot"></div>
-              <span>Monto a retirar: Límite de retiro nivel</span>
-            </div>
-            <div class="detail-right">
-              <span class="vip-tag">
-                <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
-                <span id="txt-vip-current">VIP 1</span>
-              </span>:
-              <span class="highlight-red" id="txt-limit-current">251,000 pesos</span>
-            </div>
+          <!-- Row 1 -->
+          <div class="detail-left">
+            <div class="dot"></div>
+            <span>Monto a retirar: Límite de retiro nivel</span>
           </div>
+          <span class="vip-tag">
+            <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+            <span id="txt-vip-current">VIP 1</span>
+          </span>
+          <span class="colon-separator">:</span>
+          <span class="highlight-red" id="txt-limit-current">25,122,000 pesos</span>
 
-          <div class="detail-item">
-            <div class="detail-left">
-              <div class="dot"></div>
-              <span>Monto requerido para actualizar a</span>
-            </div>
-            <div class="detail-right">
-              <span class="vip-tag">
-                <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
-                <span class="txt-vip-target">VIP 1</span>
-              </span>:
-              <span class="highlight-red" id="txt-upgrade-cost">155,000 pesos</span>
-            </div>
+          <!-- Row 2 -->
+          <div class="detail-left">
+            <div class="dot"></div>
+            <span>Monto requerido para actualizar a</span>
           </div>
+          <span class="vip-tag">
+            <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+            <span class="txt-vip-target">VIP 1</span>
+          </span>
+          <span class="colon-separator">:</span>
+          <span class="highlight-red" id="txt-upgrade-cost">155,03558300 pesos</span>
 
-          <div class="detail-item">
-            <div class="detail-left">
-              <div class="dot"></div>
-              <span>Monto a retirar después de actualizar a</span>
-            </div>
-            <div class="detail-right">
-              <span class="vip-tag">
-                <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
-                <span class="txt-vip-target">VIP 1</span>
-              </span>:
-              <span class="highlight-red" id="txt-limit-after">560,000 pesos</span>
-            </div>
+          <!-- Row 3 -->
+          <div class="detail-left">
+            <div class="dot"></div>
+            <span>Monto a retirar después de actualizar a</span>
           </div>
+          <span class="vip-tag">
+            <svg class="crown-icon" viewBox="0 0 24 24"><path d="M2 4l3 12h14l3-12-6 7-4-5-4 5-6-7zm3 14h14v2H5v-2z"/></svg>
+            <span class="txt-vip-target">VIP 1</span>
+          </span>
+          <span class="colon-separator">:</span>
+          <span class="highlight-red" id="txt-limit-after">0,000 pesos</span>
         </div>
 
         <!-- Security Note -->
